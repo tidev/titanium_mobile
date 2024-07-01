@@ -5,13 +5,15 @@
  * given version. This is extremely rare, but could occur if a developer
  * tried to manually update the lockfile (or a bad merge occurred)
  */
-'use strict';
 
-const lockfile = require('../package-lock.json');
+import fs from 'fs-extra';
+
+const lockfile = fs.readJsonSync('package-lock.json');
 
 let foundError = false;
 
 checkDependencies(lockfile.dependencies);
+
 function checkDependencies(deps) {
 	const packageNames = Object.keys(deps);
 	for (const packageName of packageNames) {
